@@ -1,0 +1,4 @@
+[submodule "backend/microservice_patient"]
+	path = backend/microservice_patient
+	url = git@github.com:Enkiduduh/microservice_patient.git
+	branch = master
