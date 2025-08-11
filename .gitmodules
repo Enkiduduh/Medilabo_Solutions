@@ -2,3 +2,7 @@
 	path = backend/microservice_patient
 	url = git@github.com:Enkiduduh/microservice_patient.git
 	branch = master
+[submodule "frontend/microservice_interface"]
+	path = frontend/microservice_interface
+	url = git@github.com:Enkiduduh/microservice_interface.git
+	branch = master
