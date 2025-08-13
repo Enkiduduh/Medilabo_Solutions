@@ -1,0 +1,12 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: medilabo-redis
+    ports:
+      - "6379:6379"             # Redis dispo sur localhost:6379
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data        # persistance des sessions
+
+volumes:
+  redis_data:
