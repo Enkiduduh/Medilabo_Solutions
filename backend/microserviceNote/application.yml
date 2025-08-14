@@ -1,5 +1,11 @@
 server:
   port: 8082
+  servlet:
+    session:
+      cookie:
+        name: JSESSIONID
+        same-site: Lax
+        http-only: true
 
 spring:
   data:
@@ -12,6 +18,7 @@ spring:
     store-type: redis
     redis:
       namespace: medilabo:sessions   # même namespace que tes autres MS
+      flush-mode: on_save
 
 
 logging:
