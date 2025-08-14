@@ -15,8 +15,12 @@ spring:
       routes:
         - id: patient-service
           uri: http://localhost:8080
-          predicates:
-            - Path=/api/**
+          predicates: [ Path=/api/** ]
+
+        - id: notes-service
+          uri: http://localhost:8082
+          predicates: [ Path=/api/notes/** ]
+
 management:
   endpoints:
     web:
