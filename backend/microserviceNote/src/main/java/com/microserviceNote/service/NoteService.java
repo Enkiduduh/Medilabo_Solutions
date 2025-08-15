@@ -32,7 +32,9 @@ public class NoteService {
     public Note create(CreateNoteRequest req) {
         Note n = new Note();
         n.setPatientId(req.getPatientId());
-        n.setContent(req.getContent());
+        n.setContent(req.getContent()
+                .replace("\r\n", "\n")
+                .replace("\r", "\n"));
         if (n.getCreatedAt() == null) n.setCreatedAt(Instant.now());
         return noteRepository.save(n);
     }
