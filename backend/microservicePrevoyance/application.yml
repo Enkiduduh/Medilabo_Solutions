@@ -1,0 +1,41 @@
+server:
+  port: 8083
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+spring:
+  session:
+    store-type: redis
+    redis:
+      namespace: medilabo:sessions
+      flush-mode: on_save
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+# Les clients Feign appellent le GATEWAY (qui gère la session/cookies)
+clients:
+  patient:
+    base-url: http://localhost:8081
+  notes:
+    base-url: http://localhost:8081
+
+# Timeouts Feign
+feign:
+  httpclient:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 2000
+        readTimeout: 4000
+        loggerLevel: basic
+
+logging:
+  level:
+    com.microservicePrevoyance: INFO
