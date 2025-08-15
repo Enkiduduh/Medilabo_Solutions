@@ -10,7 +10,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/medilabo
+      uri: mongodb://127.0.0.1:27017/medilabo
     redis:
       host: localhost
       port: 6379
