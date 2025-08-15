@@ -23,6 +23,7 @@ public class FeignCookiePropagation {
                 var cookie = req.getHeader("Cookie");
                 if (cookie != null) {
                     template.header("Cookie", cookie);
+                    template.header("Accept", "application/json");
                 }
             }
         };

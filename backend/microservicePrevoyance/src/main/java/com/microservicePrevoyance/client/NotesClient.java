@@ -10,9 +10,16 @@ import java.util.List;
 
 @FeignClient(name = "notesClient", url = "${clients.notes.base-url}")
 public interface NotesClient {
-    @GetMapping("/api/notes/{patientId}")
-    List<NoteDto> listNotes(@PathVariable("patientId") Long patientId,
+    @GetMapping(value = "/api/notes/{patientId}", headers = "Accept=application/json")
+    List<NoteDto> listNotes(@PathVariable("patientId") Integer patientId,
                             @RequestParam int page,
                             @RequestParam int size);
+
+//    @GetMapping(value = "/api/notes/search", headers = "Accept=application/json")
+//    List<NoteDto> searchNotes(@RequestParam Integer patientId,
+//                              @RequestParam String q,
+//                              @RequestParam(defaultValue = "any") String mode,
+//                              @RequestParam int page,
+//                              @RequestParam int size);
 
 }

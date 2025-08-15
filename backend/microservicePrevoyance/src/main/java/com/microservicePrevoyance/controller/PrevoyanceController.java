@@ -1,8 +1,8 @@
 package com.microservicePrevoyance.controller;
 
-import com.microservicePrevoyance.model.PatientNotes;
 import com.microservicePrevoyance.service.PrevoyanceService;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/api/prevoyance")
@@ -14,10 +14,9 @@ public class PrevoyanceController {
         this.service = service;
     }
 
-    @GetMapping("/patient/{id}")
-    public PatientNotes get(@PathVariable Long id,
-                                      @RequestParam(defaultValue = "0") int page,
-                                      @RequestParam(defaultValue = "20") int size) {
-        return service.getPatientWithNotes(id, page, size);
+    // GET /api/prevoyance/patient/4/risk
+    @GetMapping("/patient/{id}/risk")
+    public PrevoyanceService.RiskResponse risk(@PathVariable Integer id) {
+        return service.computeRisk(id);
     }
 }

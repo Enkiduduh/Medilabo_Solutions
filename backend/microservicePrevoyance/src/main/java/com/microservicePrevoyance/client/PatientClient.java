@@ -8,6 +8,6 @@ import java.util.Map;
 
 @FeignClient(name = "patientClient", url = "${clients.patient.base-url}")
 public interface PatientClient {
-    @GetMapping("/api/patients/{id}")
-    Map<String, Object> getPatient(@PathVariable("id") Long id);
+    @GetMapping(value = "/api/patients/{id}", headers = "Accept=application/json")
+    Map<String, Object> getPatient(@PathVariable("id") Integer id);
 }

@@ -20,8 +20,8 @@ public class SecurityConfig {
                 .cors(c -> {})
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/debug/**").permitAll()   // optionnel
-                        .requestMatchers("/api/notes/**").authenticated()
+//                        .requestMatchers("/api/notes/**").authenticated()
+                        .requestMatchers("/api/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .exceptionHandling(e -> e

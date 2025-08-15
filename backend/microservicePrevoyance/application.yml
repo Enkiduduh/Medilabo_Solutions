@@ -1,5 +1,11 @@
 server:
   port: 8083
+  servlet:
+    session:
+      cookie:
+        name: JSESSIONID
+        same-site: Lax
+        http-only: true
 
 management:
   endpoints:
@@ -39,3 +45,7 @@ feign:
 logging:
   level:
     com.microservicePrevoyance: INFO
+
+prevoyance:
+  keywords: [ "hemoglobine a1c", "microalbumine", "taille", "vertige", "poids", "fumeur", "fumeuse", "anormal", "cholesterol", "rechute", "reaction", "anticorps" ]  # sans accents, en minuscules
+  max-notes: 200   # on scanne au plus 200 notes récentes pour rester rapide
