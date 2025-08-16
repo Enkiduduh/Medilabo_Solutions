@@ -27,7 +27,7 @@ public class KeywordRiskEngine {
         return n.toLowerCase(Locale.FRENCH);
     }
 
-    public Result evaluate(Collection<NoteDto> notes) {
+    public Result evaluate(Collection<NoteDto> notes,  int earlyExitAt) {
         Set<String> matched = new HashSet<>();
         if (notes != null) {
             for (NoteDto n : notes) {
@@ -38,16 +38,18 @@ public class KeywordRiskEngine {
                     if (p.matcher(text).find()) {
                         matched.add(k);
                     }
+                    if (matched.size() >= earlyExitAt) break;
                 }
-                if (matched.size() >= 3) break; // short-circuit
+                if (matched.size() >= earlyExitAt) break;
             }
         }
-        int m = matched.size();
-        String status = (m >= 8) ? "EarlyOnset" : (m == 6 || m == 7) ? "inDanger" : (m == 2 || m == 3 || m == 4 || m == 5) ? "early" : "none";
-        return new Result(status, m, new ArrayList<>(matched));
+        return new Result(matched.size(), new ArrayList<>(matched));
     }
 
-    public record Result(String status, int matchedCount, List<String> matchedKeywords) {
-    }
+    public record Result(int matchedCount, List<String> matchedKeywords) {}
 }
+
+
+
+
 

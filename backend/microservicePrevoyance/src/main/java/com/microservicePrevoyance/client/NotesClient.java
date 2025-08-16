@@ -15,11 +15,4 @@ public interface NotesClient {
                             @RequestParam int page,
                             @RequestParam int size);
 
-//    @GetMapping(value = "/api/notes/search", headers = "Accept=application/json")
-//    List<NoteDto> searchNotes(@RequestParam Integer patientId,
-//                              @RequestParam String q,
-//                              @RequestParam(defaultValue = "any") String mode,
-//                              @RequestParam int page,
-//                              @RequestParam int size);
-
 }
