@@ -13,34 +13,34 @@ spring:
       mvc:
         routes:
           - id: notes-service
-            uri: http://localhost:8082
+            uri: http://notes:8082
             predicates:
               - Path=/api/notes/**
 
           - id: notes-debug
-            uri: http://localhost:8082
+            uri: http://notes:8082
             predicates:
                 - Path=/api/debug/**
 
           - id: patient-login
-            uri: http://localhost:8080
+            uri: http://patient:8080
             predicates:
               - Path=/api/connexion
           - id: patient-logout
-            uri: http://localhost:8080
+            uri: http://patient:8080
             predicates:
               - Path=/api/logout
           - id: patient-me
-            uri: http://localhost:8080
+            uri: http://patient:8080
             predicates:
               - Path=/api/me
           - id: patient-crud
-            uri: http://localhost:8080
+            uri: http://patient:8080
             predicates:
               - Path=/api/patients/**
 
           - id: aggregator-prevoyance
-            uri: http://localhost:8083
+            uri: http://prevoyance:8083
             predicates:
                 - Path=/api/prevoyance/**
 

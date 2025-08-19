@@ -18,6 +18,96 @@ services:
     volumes:
       - mongo_data:/data/db
 
+  mysql:
+    image: mysql:8
+    container_name: medilabo-mysql
+    environment:
+      MYSQL_DATABASE: medilabo_patients
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: medilabo
+      MYSQL_PASSWORD: medilabo
+    ports: ["3306:3306"]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-proot"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  patient:
+    image: medilabo/patient:latest
+    container_name: medilabo-patient
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/medilabo_patients
+      DB_USER: medilabo
+      DB_PASSWORD: medilabo
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_SESSION_REDIS_NAMESPACE: medilabo:sessions
+    ports: ["8080:8080"]
+
+  notes:
+    image: medilabo/notes:latest
+    container_name: medilabo-notes
+    depends_on:
+      mongo:
+        condition: service_started
+      redis:
+        condition: service_started
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/medilabo
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_SESSION_REDIS_NAMESPACE: medilabo:sessions
+    ports: ["8082:8082"]
+
+  prevoyance:
+    image: medilabo/prevoyance:latest
+    container_name: medilabo-prevoyance
+    depends_on:
+      patient:
+        condition: service_started
+      notes:
+        condition: service_started
+      redis:
+        condition: service_started
+    environment:
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_SESSION_REDIS_NAMESPACE: medilabo:sessions
+      CLIENTS_PATIENT_BASE_URL: http://gateway:8081
+      CLIENTS_NOTES_BASE_URL:   http://gateway:8081
+    ports: ["8083:8083"]
+
+  gateway:
+    image: medilabo/gateway:latest
+    container_name: medilabo-gateway
+    depends_on:
+      patient:
+        condition: service_started
+      notes:
+        condition: service_started
+      prevoyance:
+        condition: service_started
+    environment:
+      SERVER_PORT: 8081
+    ports: ["8081:8081"]
+
+  frontend:
+    image: medilabo/frontend:latest
+    container_name: medilabo-frontend
+    depends_on:
+      gateway:
+        condition: service_started
+    ports: ["8085:80"]
+
 volumes:
   redis_data:
   mongo_data:
+  mysql_data:
