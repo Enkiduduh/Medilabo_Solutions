@@ -261,6 +261,18 @@ Ligne 2"}'
 curl -b cookie.txt "http://localhost:8081/api/prevoyance/patient/4/risk"
 ```
 
+---
+
+## Green code (pistes...)
+
+
+- Endpoints ciblés
+- Logs au bon niveau
+- Archivage des données inutilisées dans le temps
+- Suppression des données anciennes
+- Pagination des listes
+- Requêtes DB indexées (patientId, dates)
+
 
 ---
 
