@@ -1,5 +1,10 @@
 server:
   port: 8081
+  error:
+      whitelabel:
+        enabled: false
+      include-message: never  # (dev: always)
+      include-binding-errors: never
 
 management:
   endpoints:
